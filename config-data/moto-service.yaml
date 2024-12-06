@@ -1,10 +1,11 @@
 server:
-  port: ${PORT:${SERVER_PORT:0}}
-  eureka:
-    client:
-      fetchRegistry: true
-      registerWithEureka: true
-      service-url:
-        defaultZone: http://localhost:8761/eureka/
-      instance:
-        instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  port: ${PORT:${SERVER_PORT:0}}  # Usa el puerto dinámico o uno por defecto si no está configurado
+eureka:
+  client:
+    fetchRegistry: true  # Permite que el microservicio recupere el registro de Eureka
+    registerWithEureka: true  # Permite que el microservicio se registre en Eureka
+    service-url:
+      defaultZone: http://localhost:8761/eureka/  # URL del servidor Eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}  # Asigna un ID único a la instancia
+    prefer-ip-address: true  # Preferir la dirección IP en lugar del nombre de host para evitar problemas de resolución
