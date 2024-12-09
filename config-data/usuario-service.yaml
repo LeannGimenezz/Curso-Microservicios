@@ -9,3 +9,8 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}  # Asigna un ID único a la instancia
     prefer-ip-address: true  # Preferir la dirección IP en lugar del nombre de host para evitar problemas de resolución
+spring:
+  cloud:
+    inetutils:
+      hostname: localhost
+      prefer-ipv4: true

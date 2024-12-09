@@ -36,7 +36,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario) {
         Usuario usuario1 = usuarioService.save(usuario);
         if (usuario1 == null) {
