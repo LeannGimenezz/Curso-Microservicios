@@ -2,26 +2,30 @@ server:
   port: 8080
 eureka:
   client:
-    fetchRegistry: true
-    registerWithEureka: true
+    fetch-registry: true
+    register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      default-zone: http://localhost:8761/eureka
     instance:
       hostname: localhost
+
 spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
         - id: usuario-service
-          uri: lb://USUARIO-SERVICE
+          uri: lb://usuario-service
           predicates:
             - Path=/usuario/**
         - id: carro-service
-          uri: lb://CARRO-SERVICE
+          uri: lb://carro-service
           predicates:
             - Path=/carro/**
         - id: moto-service
-          uri: lb://MOTO-SERVICE
+          uri: lb://moto-service
           predicates:
             - Path=/moto/**
 logging:

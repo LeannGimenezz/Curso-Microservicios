@@ -15,8 +15,8 @@ import java.util.List;
 public interface CarroFeignClient {
 
     @PostMapping("/carro")
-    Carro save(@RequestBody Carro carro);
+    public Carro save(@RequestBody Carro carro);
 
-    @GetMapping("/carro/{usuarioId}")
-    List<Carro> getCarro(@PathVariable Integer usuarioId);
+    @GetMapping("/carro/usuario/{usuarioId}")
+    public List<Carro> getCarros(@PathVariable("usuarioId") int usuarioId);
 }

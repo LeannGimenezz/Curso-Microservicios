@@ -15,73 +15,71 @@ import java.util.Map;
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
+
     @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuarios() {
+    public ResponseEntity<List<Usuario>> listarUsuarios(){
         List<Usuario> usuarios = usuarioService.getAll();
-        if (usuarios.isEmpty()) {
+        if(usuarios.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Integer userId) {
-        Usuario usuario = usuarioService.getUsuarioById(userId);
-        if (usuario == null) {
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> obtenerUsuario(@PathVariable("id") int id){
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if(usuario == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping("/")
-    public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario) {
-        Usuario usuario1 = usuarioService.save(usuario);
-        if (usuario1 == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(usuario1);
+    @PostMapping
+    public ResponseEntity<Usuario> guardarUsuario(@RequestBody Usuario usuario){
+        Usuario nuevoUsuario = usuarioService.save(usuario);
+        return ResponseEntity.ok(nuevoUsuario);
     }
 
     @GetMapping("/carros/{usuarioId}")
-    public ResponseEntity<List<Carro>> getCarros(@PathVariable int usuarioId){
-        Usuario usuario = usuarioService.getUsuarioById(usuarioId);
-        if (usuario == null){
+    public ResponseEntity<List<Carro>> listarCarros(@PathVariable("usuarioId") int id){
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if(usuario == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Carro> carros = usuarioService.getCarros(usuarioId);
+
+        List<Carro> carros = usuarioService.getCarros(id);
         return ResponseEntity.ok(carros);
     }
 
-
     @GetMapping("/motos/{usuarioId}")
-    public ResponseEntity<List<Moto>> getMotos(@PathVariable int usuarioId){
-        Usuario usuario = usuarioService.getUsuarioById(usuarioId);
-        if (usuario == null){
+    public ResponseEntity<List<Moto>> listarMotos(@PathVariable("usuarioId") int id){
+        Usuario usuario = usuarioService.getUsuarioById(id);
+        if(usuario == null) {
             return ResponseEntity.notFound().build();
         }
-        List<Moto> motos = usuarioService.getMotos(usuarioId);
+
+        List<Moto> motos = usuarioService.getMotos(id);
         return ResponseEntity.ok(motos);
     }
 
     @PostMapping("/carro/{usuarioId}")
-    public ResponseEntity<Carro> guardarCarro(@PathVariable int usuarioId,@RequestBody Carro carro){
-        Carro nuevoCarro = usuarioService.saveCarro(usuarioId,carro);
+    public ResponseEntity<Carro> guardarCarro(@PathVariable("usuarioId") int usuarioId,@RequestBody Carro carro){
+        Carro nuevoCarro = usuarioService.saveCarro(usuarioId, carro);
         return ResponseEntity.ok(nuevoCarro);
     }
 
     @PostMapping("/moto/{usuarioId}")
-    public ResponseEntity<Moto> guardarMoto(@PathVariable int usuarioId,@RequestBody Moto moto){
-        Moto nuevaMoto = usuarioService.saveMoto(usuarioId,moto);
+    public ResponseEntity<Moto> guardarMoto(@PathVariable("usuarioId") int usuarioId,@RequestBody Moto moto){
+        Moto nuevaMoto = usuarioService.saveMoto(usuarioId, moto);
         return ResponseEntity.ok(nuevaMoto);
     }
 
     @GetMapping("/todos/{usuarioId}")
-    public ResponseEntity<Map<String,Object>> listarVehiculos(@PathVariable Integer usuarioId){
+    public ResponseEntity<Map<String, Object>> listarTodosLosVehiculos(@PathVariable("usuarioId") int usuarioId){
         Map<String,Object> resultado = usuarioService.getUsuarioAndVehiculos(usuarioId);
         return ResponseEntity.ok(resultado);
     }
-
 }
